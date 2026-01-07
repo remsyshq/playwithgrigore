@@ -5,6 +5,47 @@
   <title>2048</title>
 
   <link href="style/main.css" rel="stylesheet" type="text/css">
+  <style>
+    #mobile-controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 20px auto;
+      padding: 15px;
+      background: rgba(187, 173, 160, 0.3);
+      border-radius: 10px;
+      max-width: 200px;
+    }
+    .controls-row {
+      display: flex;
+      gap: 10px;
+      margin: 5px 0;
+    }
+    .control-btn {
+      width: 60px;
+      height: 60px;
+      font-size: 24px;
+      border: none;
+      border-radius: 8px;
+      background: #8f7a66;
+      color: #f9f6f2;
+      cursor: pointer;
+      touch-action: manipulation;
+      user-select: none;
+      -webkit-user-select: none;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .control-btn:active {
+      transform: scale(0.95);
+      background: #7a6a5a;
+    }
+    @media (pointer: fine) and (min-width: 520px) {
+      #mobile-controls { display: none; }
+    }
+  </style>
   <link rel="shortcut icon" href="favicon.ico">
   <link rel="apple-touch-icon" href="meta/apple-touch-icon.png">
   <link rel="apple-touch-startup-image" href="meta/apple-touch-startup-image-640x1096.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"> <!-- iPhone 5+ -->
@@ -72,8 +113,19 @@
       </div>
     </div>
 
+    <div id="mobile-controls">
+      <div class="controls-row">
+        <button class="control-btn" id="btn-up">&#9650;</button>
+      </div>
+      <div class="controls-row">
+        <button class="control-btn" id="btn-left">&#9664;</button>
+        <button class="control-btn" id="btn-down">&#9660;</button>
+        <button class="control-btn" id="btn-right">&#9654;</button>
+      </div>
+    </div>
+
     <p class="game-explanation">
-      <strong class="important">How to play:</strong> Use your <strong>arrow keys</strong> to move the tiles. When two tiles with the same number touch, they <strong>merge into one!</strong>
+      <strong class="important">How to play:</strong> Use your <strong>arrow keys</strong> or <strong>swipe</strong> to move the tiles. When two tiles with the same number touch, they <strong>merge into one!</strong>
     </p>
     <hr>
     <p>

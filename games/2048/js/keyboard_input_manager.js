@@ -73,6 +73,29 @@ KeyboardInputManager.prototype.listen = function () {
   this.bindButtonPress(".restart-button", this.restart);
   this.bindButtonPress(".keep-playing-button", this.keepPlaying);
 
+  // Mobile control buttons
+  var btnUp = document.getElementById("btn-up");
+  var btnDown = document.getElementById("btn-down");
+  var btnLeft = document.getElementById("btn-left");
+  var btnRight = document.getElementById("btn-right");
+
+  if (btnUp) {
+    btnUp.addEventListener("click", function(e) { e.preventDefault(); self.emit("move", 0); });
+    btnUp.addEventListener("touchstart", function(e) { e.preventDefault(); self.emit("move", 0); }, { passive: false });
+  }
+  if (btnDown) {
+    btnDown.addEventListener("click", function(e) { e.preventDefault(); self.emit("move", 2); });
+    btnDown.addEventListener("touchstart", function(e) { e.preventDefault(); self.emit("move", 2); }, { passive: false });
+  }
+  if (btnLeft) {
+    btnLeft.addEventListener("click", function(e) { e.preventDefault(); self.emit("move", 3); });
+    btnLeft.addEventListener("touchstart", function(e) { e.preventDefault(); self.emit("move", 3); }, { passive: false });
+  }
+  if (btnRight) {
+    btnRight.addEventListener("click", function(e) { e.preventDefault(); self.emit("move", 1); });
+    btnRight.addEventListener("touchstart", function(e) { e.preventDefault(); self.emit("move", 1); }, { passive: false });
+  }
+
   // Respond to swipe events
   var touchStartClientX, touchStartClientY;
   var gameContainer = document.getElementsByClassName("game-container")[0];
