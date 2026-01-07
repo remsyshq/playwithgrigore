@@ -35,24 +35,33 @@ The project is a static website with HTML games. No build process required.
 
 ### Nginx Configuration
 
-The site is served by nginx with the following config (located at `/etc/nginx/sites-enabled/`):
+Config file: `/etc/nginx/sites-enabled/playwithgrigore.com`
+
+Clean URLs are handled via nginx `alias` directives (no symlinks needed):
 
 ```nginx
-server {
-    server_name playwithgrigore.com www.playwithgrigore.com;
-    root /var/www/playwithgrigore.com;
-    index index.html;
-
-    location / {
-        try_files $uri $uri/ =404;
-    }
-
-    # SSL managed by Certbot
-    listen 443 ssl;
-    ssl_certificate /etc/letsencrypt/live/playwithgrigore.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/playwithgrigore.com/privkey.pem;
+# Game aliases - clean URLs
+location /2048/ {
+    alias /var/www/playwithgrigore.com/games/2048/;
+}
+location /tetris/ {
+    alias /var/www/playwithgrigore.com/games/tetris/;
+}
+location /snake/ {
+    alias /var/www/playwithgrigore.com/games/snake/src/;
+}
+location /pacman/ {
+    alias /var/www/playwithgrigore.com/games/pacman/;
+}
+location /clumsy-bird/ {
+    alias /var/www/playwithgrigore.com/games/clumsy-bird/;
+}
+location /hexgl/ {
+    alias /var/www/playwithgrigore.com/games/hexgl/;
 }
 ```
+
+This means `https://playwithgrigore.com/tetris/` serves `games/tetris/index.html`.
 
 ### Deploy Process
 
@@ -102,15 +111,6 @@ games/
 └── hexgl/          # 3D racing game (Three.js)
 ```
 
-### Server Symlinks
-
-On the server, symlinks in root point to `games/` for clean URLs:
-- `/2048` → `games/2048`
-- `/tetris` → `games/tetris`
-- etc.
-
-This means URLs like `https://playwithgrigore.com/tetris/` work.
-
 ### Adding a New Game
 
 1. Clone/create game in `games/<game-name>/`
@@ -118,7 +118,14 @@ This means URLs like `https://playwithgrigore.com/tetris/` work.
 3. Add mobile controls if needed (see Mobile section)
 4. Update `index.html` landing page with link to new game
 5. Commit, push, and deploy
-6. On server, create symlink: `ln -s games/<game-name> <game-name>`
+6. On server, add nginx alias for clean URL:
+   ```nginx
+   location /<game-name>/ {
+       alias /var/www/playwithgrigore.com/games/<game-name>/;
+       try_files $uri $uri/ =404;
+   }
+   ```
+7. Test and reload nginx: `nginx -t && systemctl reload nginx`
 
 ### Mobile Controls
 
@@ -134,6 +141,6 @@ Pattern for mobile controls:
 ## Notes
 
 - The `.env` file is gitignored and should not be committed
-- Games are linked from `/games/<game-name>/` paths
-- Snake game entry point is at `/games/snake/src/`
+- Clean URLs like `/tetris/` are handled by nginx aliases (no symlinks)
+- Snake game entry point is `games/snake/src/` (served at `/snake/`)
 - Always test on mobile after making changes
