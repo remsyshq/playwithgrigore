@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play with Grigore - Coming Soon</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #e94560, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .coming-soon {
+            display: inline-block;
+            background: #e94560;
+            color: #fff;
+            padding: 8px 24px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.9; }
+        }
+
+        .games-section {
+            margin-top: 40px;
+        }
+
+        .games-section h2 {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: #a0a0a0;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(233, 69, 96, 0.2);
+        }
+
+        .game-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .game-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #e94560;
+        }
+
+        .game-card p {
+            color: #b0b0b0;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .game-tag {
+            display: inline-block;
+            background: rgba(233, 69, 96, 0.2);
+            color: #e94560;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-top: 15px;
+        }
+
+        /* Play Now Section */
+        .play-now-section {
+            margin-bottom: 60px;
+        }
+
+        .play-now-section h2 {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: #4ade80;
+        }
+
+        .play-now-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+        }
+
+        .play-now-card {
+            background: rgba(74, 222, 128, 0.1);
+            border: 1px solid rgba(74, 222, 128, 0.3);
+            border-radius: 15px;
+            padding: 20px 15px;
+            text-align: center;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            cursor: pointer;
+        }
+
+        .play-now-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(74, 222, 128, 0.3);
+            background: rgba(74, 222, 128, 0.2);
+        }
+
+        .play-now-card .game-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .play-now-card h3 {
+            font-size: 0.95rem;
+            color: #fff;
+            margin: 0;
+        }
+
+        .play-now-card .game-type {
+            font-size: 0.7rem;
+            color: #4ade80;
+            margin-top: 5px;
+        }
+
+        footer {
+            margin-top: 80px;
+            text-align: center;
+            color: #606060;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Play with Grigore</h1>
+            <span class="coming-soon">Coming Soon</span>
+        </header>
+
+        <section class="play-now-section">
+            <h2>Play Now</h2>
+            <div class="play-now-grid">
+                <a href="/2048/" class="play-now-card">
+                    <div class="game-icon">🔢</div>
+                    <h3>2048</h3>
+                    <div class="game-type">Puzzle</div>
+                </a>
+                <a href="/tetris/" class="play-now-card">
+                    <div class="game-icon">🧱</div>
+                    <h3>Tetris</h3>
+                    <div class="game-type">Classic</div>
+                </a>
+                <a href="/snake/" class="play-now-card">
+                    <div class="game-icon">🐍</div>
+                    <h3>Snake</h3>
+                    <div class="game-type">Arcade</div>
+                </a>
+                <a href="/pacman/" class="play-now-card">
+                    <div class="game-icon">👻</div>
+                    <h3>Pac-Man</h3>
+                    <div class="game-type">Arcade</div>
+                </a>
+                <a href="/clumsy-bird/" class="play-now-card">
+                    <div class="game-icon">🐦</div>
+                    <h3>Clumsy Bird</h3>
+                    <div class="game-type">Arcade</div>
+                </a>
+                <a href="/hexgl/" class="play-now-card">
+                    <div class="game-icon">🏎️</div>
+                    <h3>HexGL</h3>
+                    <div class="game-type">Racing 3D</div>
+                </a>
+            </div>
+        </section>
+
+        <section class="games-section">
+            <h2>Games in Development</h2>
+            <div class="games-grid">
+                <div class="game-card">
+                    <div class="game-icon">🎯</div>
+                    <h3>Alias</h3>
+                    <p>
+                        The classic party word-guessing game! One player describes words on cards
+                        while teammates race to guess before time runs out. Perfect for couples -
+                        play in teams of two, pair up against others, or try couple-focused challenges.
+                        Focus on communication and quick thinking for a fun, bonding experience!
+                    </p>
+                    <span class="game-tag">Word Game</span>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-icon">💰</div>
+                    <h3>Who Wants to Be a Millionaire?</h3>
+                    <p>
+                        The legendary quiz show experience! Answer increasingly difficult questions
+                        as you climb toward the million-dollar prize. Use your lifelines wisely -
+                        50:50, Phone a Friend, and Ask the Audience are your safety nets on the
+                        road to becoming a virtual millionaire!
+                    </p>
+                    <span class="game-tag">Trivia</span>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Play with Grigore. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
