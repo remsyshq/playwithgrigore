@@ -319,24 +319,24 @@
       var mobileStart = get('mobile-start');
 
       if (btnLeft) {
-        btnLeft.addEventListener('touchstart', function(e) { e.preventDefault(); if (playing) actions.push(DIR.LEFT); }, { passive: false });
-        btnLeft.addEventListener('click', function() { if (playing) actions.push(DIR.LEFT); });
+        btnLeft.addEventListener('touchstart', function(e) { e.preventDefault(); e.stopPropagation(); if (playing) actions.push(DIR.LEFT); }, { passive: false });
+        btnLeft.addEventListener('click', function(e) { e.stopPropagation(); if (playing) actions.push(DIR.LEFT); });
       }
       if (btnRight) {
-        btnRight.addEventListener('touchstart', function(e) { e.preventDefault(); if (playing) actions.push(DIR.RIGHT); }, { passive: false });
-        btnRight.addEventListener('click', function() { if (playing) actions.push(DIR.RIGHT); });
+        btnRight.addEventListener('touchstart', function(e) { e.preventDefault(); e.stopPropagation(); if (playing) actions.push(DIR.RIGHT); }, { passive: false });
+        btnRight.addEventListener('click', function(e) { e.stopPropagation(); if (playing) actions.push(DIR.RIGHT); });
       }
       if (btnRotate) {
-        btnRotate.addEventListener('touchstart', function(e) { e.preventDefault(); if (playing) actions.push(DIR.UP); }, { passive: false });
-        btnRotate.addEventListener('click', function() { if (playing) actions.push(DIR.UP); });
+        btnRotate.addEventListener('touchstart', function(e) { e.preventDefault(); e.stopPropagation(); if (playing) actions.push(DIR.UP); }, { passive: false });
+        btnRotate.addEventListener('click', function(e) { e.stopPropagation(); if (playing) actions.push(DIR.UP); });
       }
       if (btnDown) {
-        btnDown.addEventListener('touchstart', function(e) { e.preventDefault(); if (playing) actions.push(DIR.DOWN); }, { passive: false });
-        btnDown.addEventListener('click', function() { if (playing) actions.push(DIR.DOWN); });
+        btnDown.addEventListener('touchstart', function(e) { e.preventDefault(); e.stopPropagation(); if (playing) actions.push(DIR.DOWN); }, { passive: false });
+        btnDown.addEventListener('click', function(e) { e.stopPropagation(); if (playing) actions.push(DIR.DOWN); });
       }
       if (mobileStart) {
-        mobileStart.addEventListener('click', function() { play(); });
-        mobileStart.addEventListener('touchstart', function(e) { e.preventDefault(); play(); }, { passive: false });
+        mobileStart.addEventListener('click', function(e) { e.stopPropagation(); play(); });
+        mobileStart.addEventListener('touchstart', function(e) { e.preventDefault(); e.stopPropagation(); play(); }, { passive: false });
       }
     }
 
@@ -380,8 +380,29 @@
     // GAME LOGIC
     //-------------------------------------------------------------------------
 
-    function play() { hide('start'); reset(); playing = true; var ms = get('mobile-start'); if(ms) ms.textContent = 'Playing...'; }
-    function lose() { show('start'); setVisualScore(); playing = false; var ms = get('mobile-start'); if(ms) ms.textContent = 'Tap to Play Again'; }
+    function play() {
+      if (playing) return; // Prevent accidental reset while playing
+      hide('start');
+      reset();
+      playing = true;
+      var ms = get('mobile-start');
+      if(ms) {
+        ms.textContent = 'Playing...';
+        ms.disabled = true;
+        ms.style.opacity = '0.5';
+      }
+    }
+    function lose() {
+      show('start');
+      setVisualScore();
+      playing = false;
+      var ms = get('mobile-start');
+      if(ms) {
+        ms.textContent = 'Tap to Play Again';
+        ms.disabled = false;
+        ms.style.opacity = '1';
+      }
+    }
 
     function setVisualScore(n)      { vscore = n || score; invalidateScore(); }
     function setScore(n)            { score = n; setVisualScore(n);  }

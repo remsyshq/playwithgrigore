@@ -86,8 +86,54 @@ git reset --hard origin/master
 echo "Deployed at $(date)"
 ```
 
+## Adding/Editing Games
+
+### Folder Structure Rules
+
+All games MUST be stored in the `games/` directory:
+
+```
+games/
+├── 2048/           # Puzzle game (has mobile controls)
+├── tetris/         # Classic tetris (has mobile controls)
+├── snake/          # Snake game (entry: src/index.html)
+├── pacman/         # Pac-man clone
+├── clumsy-bird/    # Flappy bird clone
+└── hexgl/          # 3D racing game (Three.js)
+```
+
+### Server Symlinks
+
+On the server, symlinks in root point to `games/` for clean URLs:
+- `/2048` → `games/2048`
+- `/tetris` → `games/tetris`
+- etc.
+
+This means URLs like `https://playwithgrigore.com/tetris/` work.
+
+### Adding a New Game
+
+1. Clone/create game in `games/<game-name>/`
+2. Ensure it has an `index.html` entry point
+3. Add mobile controls if needed (see Mobile section)
+4. Update `index.html` landing page with link to new game
+5. Commit, push, and deploy
+6. On server, create symlink: `ln -s games/<game-name> <game-name>`
+
+### Mobile Controls
+
+Games should work on mobile. We've added touch controls to:
+- **Tetris**: Touch buttons below canvas (LEFT, ROTATE, DROP, RIGHT)
+- **2048**: Arrow buttons below grid (swipe also works)
+
+Pattern for mobile controls:
+- Detect mobile: `@media (pointer: coarse)` or `max-width: 768px`
+- Use `touch-action: manipulation` on buttons
+- Use `touchstart` with `{ passive: false }` and `e.preventDefault()`
+
 ## Notes
 
 - The `.env` file is gitignored and should not be committed
 - Games are linked from `/games/<game-name>/` paths
 - Snake game entry point is at `/games/snake/src/`
+- Always test on mobile after making changes
