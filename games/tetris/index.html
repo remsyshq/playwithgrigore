@@ -302,6 +302,14 @@
     function addEvents() {
       document.addEventListener('keydown', keydown, false);
       window.addEventListener('resize', resize, false);
+      // Handle tab visibility change - force redraw when tab becomes visible again
+      document.addEventListener('visibilitychange', function() {
+        if (!document.hidden) {
+          resize();
+          invalidate();
+          invalidateNext();
+        }
+      }, false);
 
       // Mobile touch controls
       var btnLeft = get('btn-left');
@@ -333,10 +341,16 @@
     }
 
     function resize(event) {
-      canvas.width   = canvas.clientWidth;  // set canvas logical size equal to its physical size
-      canvas.height  = canvas.clientHeight; // (ditto)
-      ucanvas.width  = ucanvas.clientWidth;
-      ucanvas.height = ucanvas.clientHeight;
+      var cw = canvas.clientWidth;
+      var ch = canvas.clientHeight;
+      var uw = ucanvas.clientWidth;
+      var uh = ucanvas.clientHeight;
+      // Protect against zero dimensions (can happen during tab switch, orientation change, etc.)
+      if (cw <= 0 || ch <= 0) return;
+      canvas.width   = cw;  // set canvas logical size equal to its physical size
+      canvas.height  = ch; // (ditto)
+      ucanvas.width  = uw || 100;
+      ucanvas.height = uh || 100;
       dx = canvas.width  / nx; // pixel size of a single tetris block
       dy = canvas.height / ny; // (ditto)
       invalidate();
